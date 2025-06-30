@@ -2,17 +2,22 @@
 <style>
 .lc-welcome-banner {
     width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 1.5rem;
+    /* padding: 1rem 1.5rem; */
     min-height: 78.79px;
+    color: {{color}};
+    background: {{background_color}};
 }
 .lc-member-name, .lc-source-name {
     font-weight: bold;
 }
 .lc-welcome-banner--text, .lc-welcome-banner--img {
     display: none;
+    padding: 1rem 1.5rem;
 }
 .animate-fade-in {
     animation: fadeIn .3s linear none;
@@ -22,27 +27,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-  .lc-welcome-banner {
-    color: {{color}};
-    background: {{background_color}};
-    font-size: {{font_size.value}}{{font_size.type}};
-    font-weight: {{font_weight}};
-    text-align: {{text_align.horizontal}};
-    padding-top: {{padding.top.value}}{{padding.top.type}};
-    padding-right: {{padding.right.value}}{{padding.right.type}};
-    padding-bottom: {{padding.bottom.value}}{{padding.bottom.type}};
-    padding-left: {{padding.left.value}}{{padding.left.type}};
-    margin-top: {{margin.top.value}}{{margin.top.type}};
-    margin-right: {{margin.right.value}}{{margin.right.type}};
-    margin-bottom: {{margin.bottom.value}}{{margin.bottom.type}};
-    margin-left: {{margin.left.value}}{{margin.left.type}};
-  }
-  
+} 
 </style>
 
-<div class="lc-welcome-banner" {{#if isDesignMode}}style="display:none;"{{/if}}>
+<div class="lc-welcome-banner">
   <div class="lc-welcome-banner--text">{{{ banner_html }}}</div>
   <div class="lc-welcome-banner--img">
     <div class="lc-welcome-banner--img--inner">
@@ -52,45 +40,61 @@
 </div>
 
 <script>
-const lcTpSession = (isDesignMode()) ? simLcTransferProps : sessionStorage.getItem("livechannelTransferProps");
-if (lcTpSession === null) { 
-  if (document.querySelector('.lc-app-block')) {
-    document.querySelector('.lc-app-block').style.display = "none";
+// document.addEventListener('DOMContentLoaded', () => {
+  const designMode = getCookie("stencil_preview") || getCookie("fornax_anonymousId");
+  console.log('designMode', designMode);
+  let simLcTransferProps = null;  
+  if (designMode) {
+      /*****
+     * transfer test data for design purposes
+     */
+    simLcTransferProps = `{
+        "member_name": "{{ example_member_name }}", 
+        "source_name": "{{ example_source_name }}",
+        "source_brand_src": "{{ example_source_logo }}",
+        "source_return_url": "{{ example_source_return_url }}"
+    }`;    
   }
-}
-else {
-  const transferProps = assignTransferProps();
-  console.log('transferProps', transferProps);
-  const lcWb = document.querySelector('.lc-welcome-banner');
-  console.log('lcWb', lcWb);
-  const lcWbImgEl = document.querySelector('.lc-welcome-banner--img img');
-  const imgContainer = document.querySelector('.lc-welcome-banner--img');
-  const txtContainer = document.querySelector('.lc-welcome-banner--text');
-  const sourceReturnUrlEl = document.querySelector('.lc-source-return-url');
-
-  document.querySelector('.lc-member-name').innerHTML = transferProps.member_name;
-  document.querySelector('.lc-source-name').innerHTML = transferProps.source_name;
-  if (sourceReturnUrlEl && transferProps.source_return_url) {
-    sourceReturnUrlEl.href = transferProps.source_return_url;
+  const lcTpSession = (designMode) ? simLcTransferProps : sessionStorage.getItem("livechannelTransferProps");
+  if (lcTpSession === null) { 
+    if (document.querySelector('.lc-app-block')) {
+      document.querySelector('.lc-app-block').style.display = "none";
+    }
   }
+  else {
+    const transferProps = assignTransferProps();
+    console.log('transferProps', transferProps);
+    const lcWb = document.querySelector('.lc-welcome-banner');
+    console.log('lcWb', lcWb);
+    const lcWbImgEl = document.querySelector('.lc-welcome-banner--img img');
+    const imgContainer = document.querySelector('.lc-welcome-banner--img');
+    const txtContainer = document.querySelector('.lc-welcome-banner--text');
+    const sourceReturnUrlEl = document.querySelector('.lc-source-return-url');
 
-  if (lcWbImgEl && transferProps.source_brand_src) {
-    lcWbImgEl.dataset.src = transferProps.source_brand_src;
-    lcWbImgEl.src = transferProps.source_brand_src;
+    document.querySelector('.lc-member-name').innerHTML = transferProps.member_name;
+    document.querySelector('.lc-source-name').innerHTML = transferProps.source_name;
+    if (sourceReturnUrlEl && transferProps.source_return_url) {
+      sourceReturnUrlEl.href = transferProps.source_return_url;
+    }
+
+    if (lcWbImgEl && transferProps.source_brand_src) {
+      lcWbImgEl.dataset.src = transferProps.source_brand_src;
+      lcWbImgEl.src = transferProps.source_brand_src;
+    }
+
+    lcWb.style.display = "flex";
+
+    imgContainer.classList.add('animate-fade-in');
+    txtContainer.classList.add('animate-fade-in');
   }
-
-  lcWb.style.display = "flex";
-
-  imgContainer.classList.add('animate-fade-in');
-  txtContainer.classList.add('animate-fade-in');
-}
-
-function isDesignMode() {
-  return typeof lcAppBlockInDesignMode !== 'undefined' && lcAppBlockInDesignMode;
-}
+// });
 function assignTransferProps() {
   let transferProps = JSON.parse(lcTpSession);
 
   return transferProps;
+}
+function getCookie(name) {
+    var match = document.cookie.match(new RegExp(`(^| )` + name + `=([^;]+)`));
+    if (match) return match[2];
 }
 </script>

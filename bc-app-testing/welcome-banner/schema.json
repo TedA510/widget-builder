@@ -1,10 +1,10 @@
 [
   {
     "type": "tab",
-    "label": "Design",
+    "label": "Welcome Banner Settings",
     "sections": [
       {
-        "label": "Sample Text",
+        "label": "Banner Styles",
         "settings": [
           {
             "type": "input",
@@ -22,131 +22,48 @@
             "type": "input",
             "id": "logo_image_width",
             "label": "Logo Image Width",
-            "default": "auto"
+            "default": "150px"
           },
           {
             "type": "input",
             "id": "logo_image_height",
             "label": "Logo Image Height",
-            "default": "15px"
+            "default": "auto"
           },
           {
             "type": "text",
             "id": "banner_html",
-            "label": "Banner HTML"
+            "label": "Banner HTML",
+            "default": "Welcome <span class='lc-member-name'></span> from <a class='lc-source-return-url' href='#'><span class='lc-source-name'></span></a>"
+          }
+        ]
+      },
+      {
+        "label": "Design Test Settings",
+        "settings": [
+          {
+            "type": "text",
+            "id": "example_member_name",
+            "label": "Example Member Name",
+            "default": "Shopify Test"
           },
           {
-            "type": "number",
-            "id": "font_size",
-            "label": "Font Size",
-            "default": {
-              "value": 24,
-              "type": "px"
-            }
+            "type": "text",
+            "id": "example_source_name",
+            "label": "Example Source Name",
+            "default": "LiveChannel"
           },
           {
-            "type": "select",
-            "id": "font_weight",
-            "label": "Font Weight",
-            "default": "500",
-            "typeMeta": {
-              "selectOptions": [
-                {
-                  "label": "Thin",
-                  "value": "100"
-                },
-                {
-                  "label": "Extra Light (Ultra Light)",
-                  "value": "200"
-                },
-                {
-                  "label": "Light",
-                  "value": "300"
-                },
-                {
-                  "label": "Normal",
-                  "value": "400"
-                },
-                {
-                  "label": "Medium",
-                  "value": "500"
-                },
-                {
-                  "label": "Semi Bold (Demi Bold)",
-                  "value": "600"
-                },
-                {
-                  "label": "Bold",
-                  "value": "700"
-                },
-                {
-                  "label": "Extra Bold (Ultra Bold)",
-                  "value": "800"
-                },
-                {
-                  "label": "Black (Heavy)",
-                  "value": "900"
-                }
-              ]
-            }
+            "type": "text",
+            "id": "example_source_logo",
+            "label": "Example Source Logo",
+            "default": "https://livechannel.com/wp-content/uploads/2024/02/livechannel-2.png"
           },
           {
-            "type": "alignment",
-            "label": "Text Alignment",
-            "id": "text_align",
-            "default": {
-              "horizontal": "center",
-              "vertical": "middle"
-            },
-            "typeMeta": {
-              "display": "horizontal"
-            }
-          },
-          {
-            "type": "boxModel",
-            "label": "Margin",
-            "id": "margin",
-            "default": {
-              "top": {
-                "value": "0",
-                "type": "px"
-              },
-              "right": {
-                "value": "0",
-                "type": "px"
-              },
-              "bottom": {
-                "value": "0",
-                "type": "px"
-              },
-              "left": {
-                "value": "0",
-                "type": "px"
-              }
-            }
-          },
-          {
-            "type": "boxModel",
-            "label": "Padding",
-            "id": "padding",
-            "default": {
-              "top": {
-                "value": "8",
-                "type": "px"
-              },
-              "right": {
-                "value": "24",
-                "type": "px"
-              },
-              "bottom": {
-                "value": "8",
-                "type": "px"
-              },
-              "left": {
-                "value": "24",
-                "type": "px"
-              }
-            }
+            "type": "text",
+            "id": "example_source_return_url",
+            "label": "Example Source Return URL",
+            "default": "https://saas-brand-directory.azurewebsites.net"
           }
         ]
       }
